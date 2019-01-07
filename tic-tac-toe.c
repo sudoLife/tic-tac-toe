@@ -84,7 +84,7 @@ int main()
         }
 
         // Sleep thread for animation's sake
-        usleep(50000);
+        usleep(2000);
     }
 
     // Success
