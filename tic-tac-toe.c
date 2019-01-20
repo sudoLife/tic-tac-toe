@@ -35,7 +35,7 @@ int main()
     if (d < DIM_MIN || d > DIM_MAX)
     {
         printf("Board must be between %i x %i and %i x %i, inclusive.\n",
-            DIM_MIN, DIM_MIN, DIM_MAX, DIM_MAX);
+			   DIM_MIN, DIM_MIN, DIM_MAX, DIM_MAX);
         return 2;
     }
 
@@ -55,11 +55,6 @@ int main()
         draw();
 
         // Check for win
-        if (won())
-        {
-            printf("ftw!\n");
-            break;
-        }
 
         // Prompt for coordinates
 		int tile_x,  tile_y;
@@ -81,6 +76,12 @@ int main()
         {
             printf("\nIllegal move.\n");
             usleep(2000);
+        }
+
+		if (won())
+        {
+            printf("VIIIIIIICTOOOORYY!\n");
+            break;
         }
 
         // Sleep thread for animation's sake
@@ -124,10 +125,10 @@ void draw(void)
 {
     int i, j;
 
-		for (j = 0; j < d; ++j)
-		{
-			printf("-----");
-		}
+	for (j = 0; j < d; ++j)
+	{
+		printf("-----");
+	}
 	
 	for (i = 0; i < d; ++i)
 	{		
@@ -156,8 +157,6 @@ int place(int tile_x, int tile_y)
 	}
 
 	board[tile_y - 1][tile_x - 1] = state;
-
-	state = state == 'O' ? 'X' : 'O';
 	
 
 	return 0;
@@ -166,6 +165,47 @@ int place(int tile_x, int tile_y)
 
 int won(void)
 {
-    // TODO
+    int i, j;
+
+	int won;
+	// Check horizontally
+	for (i = 0; i < d; ++i)
+	{
+		won = 1;
+		for (j = 0; j < d; ++j)
+		{
+			if (board[i][j] != state)
+			{
+				won = 0;
+			}
+		}
+		if (won)
+		{
+			return 1;
+		}
+
+	}
+
+	// Checking vertically
+	for (i = 0; i < d; ++i)
+	{
+		won = 1;
+		for (j = 0; j < d; ++j)
+		{
+			if (board[j][i] != state)
+			{
+				won = 0;
+			}
+		}
+
+		if (won)
+		{
+			return 1;
+		}
+	}
+	
+
+	state = state == 'X' ? 'O' : 'X';
+	
     return 0;
 }
