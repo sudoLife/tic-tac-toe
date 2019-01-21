@@ -151,7 +151,7 @@ void draw(void)
 
 int place(int tile_x, int tile_y)
 {
-	if (tile_x > d && tile_y > d)
+	if (tile_x > d || tile_y > d || board[tile_y - 1][tile_x - 1] == state)
 	{
 		return 1;
 	}
@@ -204,6 +204,36 @@ int won(void)
 		}
 	}
 	
+	
+	won = 1;
+	for (i = 0; i < d; ++i)
+	{
+		if (board[i][i] != state)
+		{
+			won = 0;
+			break;
+		}
+	}
+	
+	if (won)
+	{
+		return 1;
+	}
+	
+	won = 1;
+	for (i = 0, j = d - 1; i < d && j > 0; ++i, --j)
+	{
+		if (board[i][j] != state)
+		{
+			won = 0;
+			break;
+		}
+	}
+	
+	if (won)
+	{
+		return 1;
+	}
 
 	state = state == 'X' ? 'O' : 'X';
 	
